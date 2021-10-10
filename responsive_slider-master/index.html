@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Адаптивный слайдер</title>
+    <link rel="stylesheet" href="./style.css">
+</head>
+
+<body>
+    <div class="container">
+        <h1>Адаптивный слайдер</h1>
+
+        <div class="slider">
+            <div class="slider-line">
+                <img src="./images/1.jpg" alt="">
+                <img src="./images/2.jpg" alt="">
+                <img src="./images/3.jpg" alt="">
+                <img src="./images/4.jpg" alt="">
+                <img src="./images/5.jpg" alt="">
+            </div>
+        </div>
+        <div class="slider__panel">
+            <div class="slider__panel_count">
+                <span class="count_now">01</span>
+                <span class="count_divider">|</span>
+                <span class="count_total">05</span>
+            </div>
+            <ul class="slider__panel_dots">
+                <li class="slider__panel_dot slider__panel_dot-active"></li>
+                <li class="slider__panel_dot"></li>
+                <li class="slider__panel_dot"></li>
+                <li class="slider__panel_dot"></li>
+                <li class="slider__panel_dot"></li>
+            </ul>
+            <div class="slider__panel_btns">
+                <button class="button slider-prev">Prev</button>
+                <button class="button slider-next">Next</button>
+            </div>
+
+        </div>
+
+
+    </div>
+    <script src="script.js"></script>
+</body>
+
+</html>
