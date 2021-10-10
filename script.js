@@ -10,6 +10,8 @@ let count = 0;
 let offset = 0;
 let indexSlide = 1;
 let width;
+
+
 function countSliders(){
     if (images.length < 5) {
         currentSlide.textContent = `0${indexSlide}`;
@@ -34,33 +36,71 @@ function init() {
     });
     rollSlider();
 }
-
-init();
-window.addEventListener('resize', init);
-
-btnNext.addEventListener('click', function () {
-    count++;
-    indexSlide++;
-    if (count >= images.length) {
-        count = 0;
-        indexSlide = 1;
-    }
-    countSliders();
-    activeDot();
-    rollSlider();
-});
-
-btnPrev.addEventListener('click', function () {
+function prev(){
     count--;
     indexSlide--;
     if (count < 0) {
         count = images.length - 1;
         indexSlide = images.length;
     }
+}
+function next(){
+    count++;
+    indexSlide++;
+    if (count >= images.length) {
+        count = 0;
+        indexSlide = 1;
+    }
+}
+
+init();
+window.addEventListener('resize', init);
+
+btnNext.addEventListener('click', function () {
+    next()
     countSliders();
     activeDot();
     rollSlider();
 });
+
+btnPrev.addEventListener('click', function () {
+    prev()
+    countSliders();
+    activeDot();
+    rollSlider();
+});
+//swipe
+document.addEventListener('touchstart', touchStart, false);
+document.addEventListener('touchmove', touchMove, false);
+
+let x1 = null;
+
+function touchStart (event){
+    const firstTouch = event.touches[0];
+    x1 = firstTouch.clientX;
+}
+function touchMove(event){
+    if(x1 == null){
+        return false;
+    }
+        let x2 = event.touches[0].clientX;
+        let xDiff = x2-x1;
+        if(xDiff > 0){
+            prev();
+            countSliders();
+            activeDot();
+            rollSlider();
+        }
+        if (xDiff < 0){
+            next();
+        countSliders();
+        activeDot();
+        rollSlider();
+        }
+    x1 = null;
+}
+
+
 dots.forEach((item, z) => {
     for (let i = 0; i <= z; i++) {
         item.setAttribute('data-slide-to', i + 1);
@@ -71,7 +111,6 @@ dots.forEach(dot => {
         const slideTo = e.target.getAttribute('data-slide-to');
         indexSlide = slideTo;
         count = slideTo - 1;
-        console.log(slideTo);
         countSliders();
         activeDot();
         rollSlider();
