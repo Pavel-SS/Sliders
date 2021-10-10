@@ -1,5 +1,5 @@
-const images = document.querySelectorAll('.slider .slider-line img');
-const sliderLine = document.querySelector('.slider .slider-line');
+const images = document.querySelectorAll('.slider-line img');
+const sliderLine = document.querySelector('.slider-line');
 const currentSlide = document.querySelector('.count_now');
 const totalSlide = document.querySelector('.count_total');
 const btnNext = document.querySelector('.slider-next');
@@ -8,18 +8,18 @@ const dots = document.querySelectorAll('.slider__panel_dot');
 
 let count = 0;
 let offset = 0;
+let indexSlide = 1;
 let width;
 function countSliders(){
     if (images.length < 5) {
-        currentSlide.textContent = `0${count+1}`;
+        currentSlide.textContent = `0${indexSlide}`;
         totalSlide.textContent = `0${images.length}`; 
     }else{
-        currentSlide.textContent = `0${count+1}`;
+        currentSlide.textContent = `0${indexSlide}`;
         totalSlide.textContent = `0${images.length}`;
     }
 }
 function activeDot(){
-    let indexSlide = count + 1;
     dots.forEach(item=>{
         item.classList.remove('slider__panel_dot-active');
     })
@@ -40,8 +40,10 @@ window.addEventListener('resize', init);
 
 btnNext.addEventListener('click', function () {
     count++;
+    indexSlide++;
     if (count >= images.length) {
         count = 0;
+        indexSlide = 1;
     }
     countSliders();
     activeDot();
@@ -50,8 +52,10 @@ btnNext.addEventListener('click', function () {
 
 btnPrev.addEventListener('click', function () {
     count--;
+    indexSlide--;
     if (count < 0) {
         count = images.length - 1;
+        indexSlide = images.length;
     }
     countSliders();
     activeDot();
@@ -64,8 +68,10 @@ dots.forEach((item, z) => {
 });
 dots.forEach(dot => {
     dot.addEventListener('click', (e)=>{
-        const slideTo = e.target.getAtribute('data-slide-to');
-        count = slideTo;
+        const slideTo = e.target.getAttribute('data-slide-to');
+        indexSlide = slideTo;
+        count = slideTo - 1;
+        console.log(slideTo);
         countSliders();
         activeDot();
         rollSlider();
